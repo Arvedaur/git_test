@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 set -e
 
 # -------------------------------------------------
@@ -50,11 +51,18 @@ echo "✅ ALL GAME TESTS PASSED"
 # -------------------------------------------------
 # Cleanup
 # -------------------------------------------------
-echo "▶ Stopping services..."
-if [ -n "$SERVER_PID" ]; then
-  kill $SERVER_PID || true
+echo "Stopping services..."
+
+if [ -n "${SERVER_PID:-}" ]; then
+  kill "$SERVER_PID" || true
 fi
-kill $UI_PID || true
+
+if [ -n "${UI_PID:-}" ]; then
+  kill "$UI_PID" || true
+fi
+
+echo "Done."
+exit 0
 
 python tests/report_runner.py
 echo "Report: $PROJECT_ROOT/reports/report.html"
