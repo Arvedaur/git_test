@@ -25,7 +25,8 @@ jobs:
 
       - name: Run game tests
         run: |
-          chmod +x tests/run_all_tests.sh
+          chmod +x energy_game/tests/run_all_tests.sh
+          cd energy_game
           ./tests/run_all_tests.sh
 
       - name: Upload test report
